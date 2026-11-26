@@ -14,6 +14,8 @@ const $ = (id) => document.getElementById(id);
 const matrixText = (id, value) => renderMatrixText($(id), value, document);
 const instrumentFlaps = new Map();
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const compactLayout = window.matchMedia('(max-width: 600px), (max-height: 500px) and (pointer: coarse)');
+const touchInput = window.matchMedia('(pointer: coarse)');
 function instrumentValue(id, value, duration = 320) {
   setSplitFlapValue(instrumentFlaps.get(id), String(value), { duration, reducedMotion: reducedMotion() });
 }
@@ -333,7 +335,10 @@ function choose(update = {}) {
   }
   if (hasInputs()) startRun();
   else {
+    const leavingRun = $('app').dataset.mode === 'run';
     $('app').dataset.mode = 'pick'; $('workshop').hidden = true;
+    $('mobile-inputs-toggle').setAttribute('aria-expanded', 'false');
+    if (leavingRun && compactLayout.matches) window.scrollTo?.(0, 0);
     message(hashMode() ? 'Complete both inputs to compare.' : files.a || files.b ? 'Choose the other file to begin.' : 'Ready for two files.');
   }
 }
@@ -361,7 +366,9 @@ async function startRun() {
   const current = token;
   const pastedSlot = isHashInput('a') ? 'a' : 'b';
   const fileSlot = otherSlot(pastedSlot);
+  const enteringRun = $('app').dataset.mode !== 'run';
   $('app').dataset.mode = 'run'; $('workshop').hidden = false;
+  if (enteringRun && compactLayout.matches) window.scrollTo?.(0, 0);
   $('scene-error').hidden = !graphicsError;
   $('scene-error').textContent = graphicsError ? `${graphicsError} The comparison still runs. Open Values for the hashes.` : '';
   if (hashMode()) {
@@ -486,7 +493,9 @@ function renderHeading() {
   $('comparison-result').hidden = false;
   renderVerdict();
   renderHashOutputs();
-  $('scene-hint').textContent = stage >= 4 ? 'Select a dot to inspect its bit · Scroll to zoom' : 'Drag to rotate · Scroll or pinch to zoom';
+  $('scene-hint').textContent = touchInput.matches
+    ? stage >= 4 ? 'Tap a dot · Pinch to zoom' : 'Drag to rotate · Pinch to zoom'
+    : stage >= 4 ? 'Select a dot to inspect its bit · Scroll to zoom' : 'Drag to rotate · Scroll or pinch to zoom';
   for (const slot of ['a', 'b']) {
     const detail = hashMode() ? 'SHA-256 bit grid.' : descriptions[stage].join(' ');
     $(`scene-${slot}`).setAttribute('aria-label', `${inputLabel(slot)}: ${detail} Cameras are linked. Exact numeric values are available with Values.`);
@@ -800,7 +809,7 @@ for (const slot of ['a', 'b']) {
       inputModes[slot] = 'hash';
       choose();
     }
-    input.focus?.({ preventScroll: true });
+    if (!touchInput.matches) input.focus?.({ preventScroll: !compactLayout.matches });
   });
   input.addEventListener('input', () => {
     showHashMessage(slot);
@@ -819,9 +828,14 @@ for (const slot of ['a', 'b']) {
     }
     input.value = normalized;
     expectedHashes[slot] = normalized;
+    if (touchInput.matches) input.blur?.();
     choose();
   });
 }
+$('mobile-inputs-toggle').addEventListener('click', (event) => {
+  const button = event.currentTarget;
+  button.setAttribute('aria-expanded', String(button.getAttribute('aria-expanded') !== 'true'));
+});
 document.addEventListener('dragover', (event) => { if (Array.from(event.dataTransfer.types).includes('Files')) event.preventDefault(); });
 document.addEventListener('drop', (event) => { if (!Array.from(event.dataTransfer.types).includes('Files')) return; event.preventDefault(); const dropped = Array.from(event.dataTransfer.files); if (dropped.length === 2) choose({ a: dropped[0], b: dropped[1] }); else message('Choose one file on each side, or drop exactly two together.'); });
 $('clear').addEventListener('click', () => {
