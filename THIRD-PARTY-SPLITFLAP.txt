@@ -1,0 +1,27 @@
+Split-flap cell adaptation
+
+Source: https://github.com/mohdmahmodi/splitflap.org
+Pinned commit: 75a404442ff68f0a9621f13058b086f6c157b2d3
+Source file: public/board.html
+https://github.com/mohdmahmodi/splitflap.org/blob/75a404442ff68f0a9621f13058b086f6c157b2d3/public/board.html
+
+split-flap.mjs and split-flap.css adapt the cached top/bottom/falling cell,
+bottom-center hinge, split overlay, card material, forward character spool and
+the original 25ms-step / 360ms-final-fall motion. At the user's request, the
+local adapter extends that reference into a two-sided 180-degree leaf for EVERY
+character, including intermediates. Its 80:160 timing weights and landed hold
+are application choices, normalized into explicit playback frames and native
+WAAPI changes rather than the source's flat intermediate swaps.
+It does not include the source application's server, remote pairing, networking,
+audio, external fonts, message scheduler or weather features.
+
+The repository LICENSE contains the MIT notice below. Its package.json has an
+inconsistent ISC label; this adaptation preserves the actual LICENSE verbatim.
+https://github.com/mohdmahmodi/splitflap.org/blob/75a404442ff68f0a9621f13058b086f6c157b2d3/LICENSE
+
+Copyright 2026 SPLITBOARD.ORG
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

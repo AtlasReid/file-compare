@@ -1,0 +1,35 @@
+Dot-matrix reference and application adaptation
+=============================================
+
+Reference: https://dotmatrix.zzzzshawn.cloud/
+Source: https://github.com/zzzzshawn/matrix
+Reviewed 17 November 2026.
+
+The local matrix-text.mjs renderer is an application-specific text adapter
+inspired by the source's explicit dot-grid layout and currentColor dots. Its
+5x7 glyph map and SVG text rendering are local additions. This prototype does
+not bundle the source's React components or present them as a standalone
+reusable component library.
+
+Reviewed source blobs:
+loaders/base/dot-matrix-base.tsx: edb3c8e3b1a0ef0090a27123522971f3b3d5fc3e
+loaders/styles.css: 00bbe2028a4bed54d73a63728863719175204ccf
+loaders/core/matrix-layout.ts: 4391e93606c9516e46f4274cbdb4ac0d5b6be3fb
+LICENSE: 8b7cde67a0f16ba8b91a2e530f6396ac76a4f4cb
+
+The source license is reproduced below, unchanged:
+
+Custom Proprietary License
+
+Copyright (c) 2026 dot-matrix contributors
+All rights reserved.
+
+Permission is granted to use this software, including in commercial and non-commercial products.
+
+The following are strictly prohibited without prior written permission from the copyright holder:
+1. Publishing, distributing, or presenting any component from this project as a standalone reusable component, or claiming it as part of another component library or similar reusable component collection.
+2. Selling, sublicensing, renting, leasing, or otherwise commercializing any component from this project, whether modified or unmodified, as a standalone component offering.
+
+Any use not expressly permitted by this license is prohibited.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
