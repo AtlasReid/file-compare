@@ -309,7 +309,7 @@ dialog a { color: var(--accent); font-size: 11px; text-underline-offset: 3px; }
   [data-mode="pick"] .mobile-page-title { display: block; color: var(--ink); font: 500 clamp(18px, 2vw, 23px)/1.15 var(--sans); letter-spacing: -.025em; text-align: right; margin: 0; }
   .file-area { flex: 0 0 auto; margin: 8px 0 14px; }
   .pick-intro, .pick-intro p { margin: 0; }
-  .pick-intro h1 { display: none; }
+  .masthead:has(.mobile-page-title) + .file-area .pick-intro h1 { display: none; }
   .file-huds { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   .file-actions { grid-template-columns: minmax(0, 1fr); gap: 4px; padding: 6px 10px; }
   .compare-switch { justify-self: start; }

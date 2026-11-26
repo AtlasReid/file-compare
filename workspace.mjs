@@ -16,6 +16,7 @@ const instrumentFlaps = new Map();
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const compactLayout = window.matchMedia('(max-width: 600px), (max-height: 500px) and (pointer: coarse)');
 const touchInput = window.matchMedia('(pointer: coarse)');
+const mobileInputsToggle = $('mobile-inputs-toggle');
 function instrumentValue(id, value, duration = 320) {
   setSplitFlapValue(instrumentFlaps.get(id), String(value), { duration, reducedMotion: reducedMotion() });
 }
@@ -337,7 +338,7 @@ function choose(update = {}) {
   else {
     const leavingRun = $('app').dataset.mode === 'run';
     $('app').dataset.mode = 'pick'; $('workshop').hidden = true;
-    $('mobile-inputs-toggle').setAttribute('aria-expanded', 'false');
+    mobileInputsToggle?.setAttribute('aria-expanded', 'false');
     if (leavingRun && compactLayout.matches) window.scrollTo?.(0, 0);
     message(hashMode() ? 'Complete both inputs to compare.' : files.a || files.b ? 'Choose the other file to begin.' : 'Ready for two files.');
   }
@@ -832,9 +833,8 @@ for (const slot of ['a', 'b']) {
     choose();
   });
 }
-$('mobile-inputs-toggle').addEventListener('click', (event) => {
-  const button = event.currentTarget;
-  button.setAttribute('aria-expanded', String(button.getAttribute('aria-expanded') !== 'true'));
+mobileInputsToggle?.addEventListener('click', () => {
+  mobileInputsToggle.setAttribute('aria-expanded', String(mobileInputsToggle.getAttribute('aria-expanded') !== 'true'));
 });
 document.addEventListener('dragover', (event) => { if (Array.from(event.dataTransfer.types).includes('Files')) event.preventDefault(); });
 document.addEventListener('drop', (event) => { if (!Array.from(event.dataTransfer.types).includes('Files')) return; event.preventDefault(); const dropped = Array.from(event.dataTransfer.files); if (dropped.length === 2) choose({ a: dropped[0], b: dropped[1] }); else message('Choose one file on each side, or drop exactly two together.'); });
